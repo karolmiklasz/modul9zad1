@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exchange Rates Calculator</title>
+</head>
+<body>
+    <h1>Exchange Rates Calculator</h1>
+    
+    <form method="post">
+        <label for="currency">Select currency:</label>
+        <select name="currency" id="currency">
+            {% for rate in rates %}
+                <option value="{{ rate.code }}">{{ rate.currency }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="amount">Enter amount:</label>
+        <input type="number" name="amount" id="amount" required>
+
+        <button type="submit">Calculate</button>
+    </form>
+
+    {% if cost_in_pln is not none %}
+        <p>Cost in PLN: {{ cost_in_pln }}</p>
+    {% endif %}
+</body>
+</html>
