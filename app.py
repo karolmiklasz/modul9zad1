@@ -19,19 +19,20 @@ with open(csv_filename, mode="w", newline="", encoding="utf-8") as csvfile:
     for rate in rates:
         writer.writerow(rate)
 
-def calculate_cost(currency_code, amount):
+def calculate_cost(rates, currency_code, amount):
     for rate in rates:
         if rate["code"] == currency_code:
             exchange_rate = rate["ask"]
             cost_in_pln = amount * exchange_rate
             return cost_in_pln
 
+
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
         currency_code = request.form["currency"]
         amount = float(request.form["amount"])
-        cost_in_pln = calculate_cost(currency_code, amount)
+        cost_in_pln = calculate_cost(rates, currency_code, amount)
         return render_template("index.html", rates=rates, cost_in_pln=cost_in_pln)
     else:
         return render_template("index.html", rates=rates, cost_in_pln=None)
